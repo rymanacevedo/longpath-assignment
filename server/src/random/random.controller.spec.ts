@@ -15,4 +15,8 @@ describe('RandomController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('should return a timestamp', () => {
+    expect(controller.getTimestamp()).toStrictEqual({"timestamp": Date.now()});
+  })
 });
