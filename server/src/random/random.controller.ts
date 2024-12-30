@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Query, Controller, Get, Post } from '@nestjs/common';
 import { RandomService } from './random.service';
 
 @Controller('random')
@@ -16,7 +16,7 @@ export class RandomController {
   }
 
   @Get('filter') 
-  filterNumbers(@Query('start'): string, @Query('end'): end: string){
+  filterNumbers(@Query('start') start: string, @Query('end') end: string) {
     return this.randomService.getFilteredNumbers(start, end);
   } 
 }
