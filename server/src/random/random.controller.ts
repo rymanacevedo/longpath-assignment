@@ -11,6 +11,7 @@ export class RandomController {
 
   @Post()
   setFrequency(@Body('frequency') frequency: number) {
+    this.randomService.frequency = frequency;
     return {message: `Frequency set to ${frequency}ms`}
   }
 }
