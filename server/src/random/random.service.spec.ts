@@ -28,4 +28,9 @@ describe('RandomService', () => {
       /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
     );
   });
+
+  it('should update the frequency to user set number', () => {
+    service.frequency = 5;
+    expect(service.frequency).toEqual(5);
+  });
 });

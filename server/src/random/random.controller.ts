@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { RandomService } from './random.service';
 
 @Controller('random')
@@ -10,7 +10,7 @@ export class RandomController {
   }
 
   @Post()
-  setFrequency() {
-    return {message: `Frequency set to 5ms`}
+  setFrequency(@Body('frequency') frequency: number) {
+    return {message: `Frequency set to ${frequency}ms`}
   }
 }

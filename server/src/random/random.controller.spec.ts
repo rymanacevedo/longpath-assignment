@@ -25,7 +25,7 @@ describe('RandomController', () => {
   });
 
   it('should set the frequency', () => {
-    const result = controller.setFrequency();
-    expect(result).toHaveProperty('message');
+    const result = controller.setFrequency(5);
+    expect(result.message).toBe('Frequency set to 5ms')
   });
 });
