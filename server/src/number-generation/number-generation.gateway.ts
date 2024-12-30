@@ -3,6 +3,7 @@ from '@nestjs/websockets';
 
 import {Server} from 'socket.io';
 
+// TODO: https://docs.nestjs.com/security/rate-limiting#websockets
 @WebSocketGateway()
 export class NumberGenerationGateway {
 
