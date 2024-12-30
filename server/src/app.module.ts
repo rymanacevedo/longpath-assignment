@@ -3,16 +3,19 @@ import { AppController } from './app.controller';
 import { RandomController } from './random/random.controller';
 import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { APP_GUARD } from '@nestjs/core';
 import { join } from 'path';
 import { RandomService } from './random/random.service';
 import { NumberGenerationGateway } from './number-generation/number-generation.gateway';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot({
+    ThrottlerModule.forRoot([{
       ttl: 60000,
       limit: 10
-    }),
+  }]),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'client', 'build'),
     }),
