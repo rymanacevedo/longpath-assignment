@@ -1,9 +1,19 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer }
+from '@nestjs/websockets';
+
+import {Server} from 'socket.io';
 
 @WebSocketGateway()
 export class NumberGenerationGateway {
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+
+
+  @WebSocketServer() io: Server;
+
+  @SubscribeMessage('ping')
+  handleMessage(client: any, payload: any) {
+    return {
+      event: 'pong',
+      data: 'Wrong data'
+    }
   }
 }
