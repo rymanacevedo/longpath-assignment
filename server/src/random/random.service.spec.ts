@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { RandomService } from './random.service';
+import { NumberGeneration, RandomService } from './random.service';
 
 describe('RandomService', () => {
   let service: RandomService;
@@ -16,7 +16,16 @@ describe('RandomService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should start number generation', () => {
-    
-  })
+  it('should generate a random number within range', () => {
+    const result = service.startNumberGeneration();
+    expect(result.value).toBeGreaterThanOrEqual(0);
+    expect(result.value).toBeLessThan(100);
+  });
+
+  it('should return a valid timestamp', () => {
+    const result = service.startNumberGeneration();
+    expect(result.timestamp).toMatch(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
+    );
+  });
 });

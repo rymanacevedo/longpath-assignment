@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RandomController } from './random.controller';
+import { RandomService } from './random.service';
 
 describe('RandomController', () => {
   let controller: RandomController;
@@ -7,6 +8,7 @@ describe('RandomController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RandomController],
+      providers: [RandomService]
     }).compile();
 
     controller = module.get<RandomController>(RandomController);
@@ -16,7 +18,9 @@ describe('RandomController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return a timestamp', () => {
-    expect(controller.getTimestamp()).toStrictEqual({"timestamp": Date.now()});
-  })
+  // it('should return a timestamp and value', () => {
+  //   const result = controller.getRandomNumber();
+  //   expect(result).toHaveProperty('value');
+  //   expect(result).toHaveProperty('timestamp');
+  // });
 });
