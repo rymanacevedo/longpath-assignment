@@ -14,4 +14,9 @@ export class RandomController {
     this.randomService.frequency = frequency;
     return {message: `Frequency set to ${frequency}ms`}
   }
+
+  @Get('filter') 
+  filterNumbers(@Query('start'): string, @Query('end'): end: string){
+    return this.randomService.getFilteredNumbers(start, end);
+  } 
 }
