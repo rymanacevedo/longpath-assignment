@@ -15,4 +15,8 @@ describe('RandomService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should start number generation', () => {
+    
+  })
 });

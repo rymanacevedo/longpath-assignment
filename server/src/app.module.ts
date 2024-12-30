@@ -4,6 +4,7 @@ import { RandomController } from './random/random.controller';
 import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { RandomService } from './random/random.service';
 
 @Module({
   imports: [
@@ -12,6 +13,6 @@ import { join } from 'path';
     }),
   ],
   controllers: [AppController, RandomController],
-  providers: [AppService],
+  providers: [AppService, RandomService],
 })
 export class AppModule {}
