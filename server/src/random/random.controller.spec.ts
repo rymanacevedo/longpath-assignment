@@ -18,9 +18,14 @@ describe('RandomController', () => {
     expect(controller).toBeDefined();
   });
 
-  // it('should return a timestamp and value', () => {
-  //   const result = controller.getRandomNumber();
-  //   expect(result).toHaveProperty('value');
-  //   expect(result).toHaveProperty('timestamp');
-  // });
+  it('should return a timestamp and value', () => {
+    const result = controller.getRandomNumber();
+    expect(result).toHaveProperty('value');
+    expect(result).toHaveProperty('timestamp');
+  });
+
+  it('should set the frequency', () => {
+    const result = controller.setFrequency();
+    expect(result).toHaveProperty('message');
+  });
 });
