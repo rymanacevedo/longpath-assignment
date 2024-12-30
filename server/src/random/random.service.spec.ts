@@ -33,4 +33,18 @@ describe('RandomService', () => {
     service.frequency = 5;
     expect(service.frequency).toEqual(5);
   });
+
+  it('should filter numbers by start and end parameters', () => {
+    service['_numbers'] = [
+      { timestamp: '2023-01-01T00:00:00.000Z', value: 1 },
+      { timestamp: '2023-01-02T00:00:00.000Z', value: 2 },
+      { timestamp: '2023-01-03T00:00:00.000Z', value: 3 },
+    ];
+    const result = service.getFilteredNumbers('2023-01-01T00:00:00.000Z', '2023-01-02T23:59:59.999Z');
+    expect(result.length).toBe(2);
+    expect(result).toEqual([
+      { timestamp: '2023-01-01T00:00:00.000Z', value: 1 },
+      { timestamp: '2023-01-02T00:00:00.000Z', value: 2 },
+    ]);
+  });
 });
