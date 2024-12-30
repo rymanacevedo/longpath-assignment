@@ -9,11 +9,20 @@ import { NumberGenerationGateway } from './number-generation/number-generation.g
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      ttl: 60000,
+      limit: 10
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'client', 'build'),
     }),
   ],
   controllers: [AppController, RandomController],
-  providers: [AppService, RandomService, NumberGenerationGateway],
+  providers: [AppService, RandomService, NumberGenerationGateway,
+    {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard
+  }
+],
 })
 export class AppModule {}
