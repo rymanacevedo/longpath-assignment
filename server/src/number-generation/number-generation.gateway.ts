@@ -9,11 +9,19 @@ export class NumberGenerationGateway {
 
   @WebSocketServer() io: Server;
 
+  handleConnection(client: any, ...args: any[]) {
+    const {sockets} = this.io.sockets;
+  }
+
+  handleDisconnect(client: any) {
+
+  }
+
   @SubscribeMessage('ping')
   handleMessage(client: any, payload: any) {
     return {
       event: 'pong',
-      data: 'Wrong data'
+      data: payload
     }
   }
 }
