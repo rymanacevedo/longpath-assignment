@@ -7,19 +7,50 @@ export type NumberGeneration = {
 
 @Injectable()
 export class RandomService {
+    private intervalId: NodeJS.Timeout | null = null;
     private _frequency = 1000; // in ms
     private _numbers: NumberGeneration[] = [];
-    startNumberGeneration(): NumberGeneration {
-        const randomNumber = Math.floor(Math.random() * 100); // Change 100 to your desired range
-        ;
-        const timestamp = new Date().toISOString();
+    private isGenerating = false;
+    
+    startNumberGeneration() {
+        if(this.isGenerating) {
+            return Promise.resolve({message: 'Already generating numbers'});
+        }
+
+        this.isGenerating = true;
+
+        this.intervalId = setInterval(() => {
+            const randomNumber = Math.floor(Math.random() * 100); // Change 100 to your desired range
+            ;
+            const timestamp = new Date().toISOString();
+            this._numbers.push({timestamp, value: randomNumber })
+        }, this.frequency);
 
 
-        return {value: randomNumber, timestamp}
+
+        return Promise.resolve({message: 'Number generation started'});
     }
 
-    public set frequency(v : number) {
+    async stopNumberGeneration() {
+
+        if(!this.isGenerating) {
+            return Promise.resolve({message: 'Number generation not started'});
+        }
+
+        if(this.intervalId) {
+            clearInterval(this.intervalId);
+        }
+        this.isGenerating = false;
+        return Promise.resolve({message: 'Number generation stopped'});
+    }
+
+    public async setFrequency(v : number) {
         this._frequency = v;
+        if (this.isGenerating) {
+          await  this.stopNumberGeneration();
+          await  this.startNumberGeneration();
+        }
+        return Promise.resolve({ message: `Frequency updated to ${v}ms` });
     }
  
     public get frequency() : number {
