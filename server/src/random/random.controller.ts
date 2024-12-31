@@ -9,6 +9,11 @@ export class RandomController {
     return this.randomService.startNumberGeneration();
   }
 
+  @Post('start')
+  startNumberGeneration() {
+    return this.randomService.startNumberGeneration();
+  }
+
   @Post('stop')
   stopNumberGeneration() {
     return this.randomService.stopNumberGeneration();
