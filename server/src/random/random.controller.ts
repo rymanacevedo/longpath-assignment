@@ -9,6 +9,11 @@ export class RandomController {
     return this.randomService.startNumberGeneration();
   }
 
+  @Post('stop')
+  stopNumberGeneration() {
+    return this.randomService.stopNumberGeneration();
+  }
+
   @Post()
   setFrequency(@Body('frequency') frequency: number) {
     this.randomService.setFrequency(frequency);
