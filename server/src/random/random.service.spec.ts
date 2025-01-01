@@ -12,26 +12,61 @@ describe('RandomService', () => {
     service = module.get<RandomService>(RandomService);
   });
 
+  afterEach(() => {
+    jest.clearAllTimers();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it('should generate a random number within range', () => {
-    const result = service.startNumberGeneration();
-    expect(result.value).toBeGreaterThanOrEqual(0);
-    expect(result.value).toBeLessThan(100);
+  describe('startNumberGeneration', () => {
+    it('should start generating numbers', async () => {
+      const response = await service.startNumberGeneration();
+      expect(response).toEqual({ message: 'Number generation started' });
+      expect(service['isGenerating']).toBe(true);
+      expect(setInterval).toHaveBeenCalledWith(expect.any(Function), service.frequency);
+    });
+
+    it('should not start if already generating', async () => {
+      await service.startNumberGeneration();
+      const response = await service.startNumberGeneration();
+      expect(response).toEqual({ message: 'Already generating numbers' });
+    });
   });
 
-  it('should return a valid timestamp', () => {
-    const result = service.startNumberGeneration();
-    expect(result.timestamp).toMatch(
-      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
-    );
+  describe('stopNumberGeneration', () => {
+    it('should stop number generation', async () => {
+      await service.startNumberGeneration();
+      const response = await service.stopNumberGeneration();
+      expect(response).toEqual({ message: 'Number generation stopped' });
+      expect(service['isGenerating']).toBe(false);
+      expect(clearInterval).toHaveBeenCalledWith(service['intervalId']);
+    });
+
+    it('should handle stop when not generating', async () => {
+      const response = await service.stopNumberGeneration();
+      expect(response).toEqual({ message: 'Number generation not started' });
+    });
   });
 
-  it('should update the frequency to user set number', () => {
-    service.frequency = 5;
-    expect(service.frequency).toEqual(5);
+
+   describe('setFrequency', () => {
+    it('should update frequency and restart generation if active', async () => {
+      await service.startNumberGeneration();
+      const response = await service.setFrequency(5000);
+      expect(response).toEqual({ message: 'Frequency updated to 5000ms' });
+      expect(service.frequency).toBe(5000);
+      expect(clearInterval).toHaveBeenCalled();
+      expect(setInterval).toHaveBeenCalledWith(expect.any(Function), 5000);
+    });
+
+    it('should update frequency without restarting if not active', async () => {
+      const response = await service.setFrequency(2000);
+      expect(response).toEqual({ message: 'Frequency updated to 2000ms' });
+      expect(service.frequency).toBe(2000);
+      expect(clearInterval).not.toHaveBeenCalled();
+    });
   });
 
   it('should filter numbers by start and end parameters', () => {
