@@ -18,12 +18,6 @@ describe('RandomController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return a timestamp and value', () => {
-    const result = controller.getRandomNumber();
-    expect(result).toHaveProperty('value');
-    expect(result).toHaveProperty('timestamp');
-  });
-
   it('should set the frequency', () => {
     const result = controller.setFrequency(5);
     expect(result.message).toBe('Frequency set to 5ms')

@@ -1,27 +1,18 @@
 import { Body, Query, Controller, Get, Post } from '@nestjs/common';
+import { NumberGenerationGateway } from 'src/number-generation/number-generation.gateway';
 import { RandomService } from './random.service';
 
 @Controller('random')
 export class RandomController {
-  constructor(private randomService: RandomService) {}
-  @Get()
-  getRandomNumber() {
-    return this.randomService.startNumberGeneration();
-  }
-
-  @Post('start')
-  startNumberGeneration() {
-    return this.randomService.startNumberGeneration();
-  }
-
-  @Post('stop')
-  stopNumberGeneration() {
-    return this.randomService.stopNumberGeneration();
-  }
+  constructor(private readonly gateway: NumberGenerationGateway, private randomService: RandomService) {}
 
   @Post()
   setFrequency(@Body('frequency') frequency: number) {
-    this.randomService.setFrequency(frequency);
+    if(frequency <= 0) {
+      return {message: 'Frequency must be greater than 0'}
+    }
+
+    this.gateway.updateFrequency(frequency);
     return {message: `Frequency set to ${frequency}ms`}
   }
 
