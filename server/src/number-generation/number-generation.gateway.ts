@@ -56,8 +56,8 @@ export class NumberGenerationGateway {
   updateFrequency(newFrequency: number) {
     this._frequency = newFrequency;
     if (this._intervalId) {
-      this.stopGeneration();
-      this.startGeneration();
+      this.stopGeneration(null);
+      this.startGeneration(null);
     }
   }
 

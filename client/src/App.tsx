@@ -7,6 +7,7 @@ const App = () => {
   const [data, setData] = useState<{ timestamp: string; value: number }[]>([]);
 
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [frequency, setFrequency] = useState(1000);
 
   useEffect(() => {
     const newSocket = io('http://localhost:3001', {
@@ -45,6 +46,11 @@ const App = () => {
     socket.emit('stop');
   };
 
+  const updateFrequency = async () => {
+    const response: any = await axios.post('http://localhost:3001/random/frequency', {
+      frequency
+    });
+  };
   const chartOptions = {
     xAxis: { type: 'category', data: data.map((d) => d.timestamp) },
     yAxis: { type: 'value' },
@@ -56,6 +62,10 @@ const App = () => {
       <h1>Random Number Generator</h1>
       <button onClick={startNumberGeneration}>Start</button> 
       <button onClick={stopNumberGeneration}>Stop</button>
+
+    
+      <input value={frequency} onChange={(e) => setFrequency(Number(e.target.value))} id="updateFrequency" type='number'/>
+      <button onClick={updateFrequency}>Update Frequency</button>
 
       <ReactECharts option={chartOptions} />
     </div>

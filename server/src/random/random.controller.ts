@@ -5,7 +5,7 @@ import { NumberGenerationGateway } from 'src/number-generation/number-generation
 export class RandomController {
   constructor(private readonly gateway: NumberGenerationGateway) {}
 
-  @Post()
+  @Post('frequency')
   setFrequency(@Body('frequency') frequency: number) {
     if(frequency <= 0) {
       return {message: 'Frequency must be greater than 0'}
