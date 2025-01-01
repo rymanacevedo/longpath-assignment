@@ -12,13 +12,11 @@ import { Server, Socket } from 'socket.io';
 })
 export class NumberGenerationGateway implements OnGatewayConnection, OnGatewayDisconnect{
 
-
   @WebSocketServer() io: Server;
 
   private intervalId: NodeJS.Timeout | null = null;
   private frequency = 1000; // Default frequency in ms
 
-  // Handle new client connection
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
     client.emit('connected', { message: 'Welcome to the WebSocket server!' });
@@ -49,11 +47,24 @@ export class NumberGenerationGateway implements OnGatewayConnection, OnGatewayDi
         const timestamp = new Date().toISOString();
         const data = { value: randomNumber, timestamp };
   
-        // Broadcast the random number to all connected clients
         this.io.emit('random-number', data);
       }, this.frequency);
   
       return { event: 'started', message: 'Number generation started' };
     }
+
+    @SubscribeMessage('stop')
+    stopGeneration(client: Socket) {
+      if (!this.intervalId) {
+        client.emit('error', { message: 'Generation is not running' });
+        return;
+      }
+  
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+  
+      return { event: 'stopped', message: 'Number generation stopped' };
+    }
+  
   
 }
