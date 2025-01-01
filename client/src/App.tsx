@@ -1,18 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
+import {io, Socket} from 'socket.io-client';
 import ReactECharts from 'echarts-for-react';
 
 const App = () => {
   const [data, setData] = useState<{ timestamp: string; value: number }[]>([]);
 
+  const [socket, setSocket] = useState<Socket | null>(null);
+
+  useEffect(() => {
+    const newSocket = io('http://localhost:3001', {
+      transports: ['websocket'],
+    });
+
+    setSocket(newSocket);
+
+    newSocket.on('status', (data) => {
+      console.log(data);
+    });
+
+    newSocket.on('random-number', (data) => {
+      console.log('New number received:', data);
+      setData((prevData) => [...prevData, data]);
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
   
   const startNumberGeneration = async () => {
-    await axios.post('http://localhost:3001/random/start');
+    if(!socket) {
+      return;
+    }
+
+    socket.emit('start');
   }
 
   const stopNumberGeneration = async () => {
-    await axios.post('http://localhost:3001/random/stop');
+    if(!socket) {
+      return;
+    }
+
+    socket.emit('stop');
   };
 
   const chartOptions = {
