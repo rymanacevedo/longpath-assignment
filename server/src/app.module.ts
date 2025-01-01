@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { APP_GUARD } from '@nestjs/core';
 import { join } from 'path';
-import { RandomService } from './random/random.service';
 import { NumberGenerationGateway } from './number-generation/number-generation.gateway';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 
@@ -21,7 +20,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
     }),
   ],
   controllers: [AppController, RandomController],
-  providers: [AppService, RandomService, NumberGenerationGateway,
+  providers: [AppService, NumberGenerationGateway,
     {
     provide: APP_GUARD,
     useClass: ThrottlerGuard

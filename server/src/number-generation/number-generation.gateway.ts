@@ -15,33 +15,33 @@ import { Server } from 'socket.io';
 export class NumberGenerationGateway {
   @WebSocketServer() io: Server;
 
-  private intervalId: NodeJS.Timeout | null = null;
-  private frequency = 1000; // Default frequency in ms
+  private _intervalId: NodeJS.Timeout | null = null;
+  private _frequency = 1000; // Default frequency in ms
 
   startGeneration() {
-    if (this.intervalId) {
+    if (this._intervalId) {
       return;
     }
 
-    this.intervalId = setInterval(() => {
+    this._intervalId = setInterval(() => {
       const randomNumber = Math.floor(Math.random() * 100);
       const timestamp = new Date().toISOString();
       const data = { value: randomNumber, timestamp };
 
       this.io.emit('random-number', data);
-    }, this.frequency);
+    }, this._frequency);
   }
 
   stopGeneration() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
+    if (this._intervalId) {
+      clearInterval(this._intervalId);
+      this._intervalId = null;
     }
   }
 
   updateFrequency(newFrequency: number) {
-    this.frequency = newFrequency;
-    if (this.intervalId) {
+    this._frequency = newFrequency;
+    if (this._intervalId) {
       this.stopGeneration();
       this.startGeneration();
     }

@@ -1,10 +1,9 @@
 import { Body, Query, Controller, Get, Post } from '@nestjs/common';
 import { NumberGenerationGateway } from 'src/number-generation/number-generation.gateway';
-import { RandomService } from './random.service';
 
 @Controller('random')
 export class RandomController {
-  constructor(private readonly gateway: NumberGenerationGateway, private randomService: RandomService) {}
+  constructor(private readonly gateway: NumberGenerationGateway) {}
 
   @Post()
   setFrequency(@Body('frequency') frequency: number) {
@@ -16,8 +15,4 @@ export class RandomController {
     return {message: `Frequency set to ${frequency}ms`}
   }
 
-  @Get('filter') 
-  filterNumbers(@Query('start') start: string, @Query('end') end: string) {
-    return this.randomService.getFilteredNumbers(start, end);
-  } 
 }
