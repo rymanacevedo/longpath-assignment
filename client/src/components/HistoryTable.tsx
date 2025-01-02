@@ -46,39 +46,38 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           />
       </div>
 
-      {/* Table */}
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th
-                onClick={() => {
-                  setSortBy('timestamp');
-                  setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-                }}
-              >
-                Timestamp {sortBy === 'timestamp' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </th>
-              <th
-                onClick={() => {
+
+      <div className="overflow-x-auto">
+  <table className="min-w-full divide-y divide-gray-200">
+    <thead className="bg-gray-50">
+      <tr>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+         onClick={() => {
+          setSortBy('timestamp');
+          setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        }}
+        
+        >Timestamp {sortBy === 'timestamp' && (sortDirection === 'asc' ? '↑' : '↓')}</th>
+        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                 onClick={() => {
                   setSortBy('value');
                   setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
                 }}
-              >
-                Value {sortBy === 'value' && (sortDirection === 'asc' ? '↑' : '↓')}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.slice(-20).map((item, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{item.timestamp}</td>
-                <td>{item.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        >     Value {sortBy === 'value' && (sortDirection === 'asc' ? '↑' : '↓')}</th>
+      </tr>
+    </thead>
+    <tbody className="bg-white divide-y divide-gray-200">
+      {filteredData.slice(-20).map((item, index) => (
+        <tr key={index}>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{index + 1}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.timestamp}</td>
+          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{item.value}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
     </>
   );
 };

@@ -11,26 +11,29 @@ interface Props {
 
 const DateTimeSelector = ({ startDate, setStartDate, endDate, setEndDate }: Props) => {
   return (
-    <>
-      <div>
-        <label>Start Date:</label>
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          showTimeSelect
-          dateFormat="Pp"
-        />
-      </div>
-      <div>
-        <label>End Date:</label>
-        <DatePicker
-          selected={endDate}
-          onChange={(date) => setEndDate(date)}
-          showTimeSelect
-          dateFormat="Pp"
-        />
-      </div>
-    </>
+    <div className="grid grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-700">Start Date:</label>
+      <DatePicker
+        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        selected={startDate}
+        onChange={(date) => setStartDate(date)}
+        showTimeSelect
+        dateFormat="Pp"
+      />
+    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700">End Date:</label>
+      <DatePicker
+        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+        selected={endDate}
+        onChange={(date) => setEndDate(date)}
+        showTimeSelect
+        dateFormat="Pp"
+      />
+    </div>
+  </div>
+  
   );
 };
 
