@@ -3,7 +3,7 @@ type Toasty = {
   type: 'success' | 'error' | 'info';
 };
 
-const Toast = ({ message, type = 'info' }: Toasty) => {
+const Toast = ({ message, type }: Toasty) => {
   const typeClasses = {
     success: 'bg-green-500',
     error: 'bg-red-500',

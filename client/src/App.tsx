@@ -18,6 +18,7 @@ const App = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>('success');
 
   useEffect(() => {
     const newSocket = io('http://localhost:3001', {
@@ -54,12 +55,14 @@ const App = () => {
     setFilteredData(filtered);
   }, [startDate, endDate, data]);
 
-  const handleShowToast = (message: string) => {
+  const handleShowToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
     setToastMessage(message);
     setShowToast(true);
+    setToastType(type);
     setTimeout(() => {
       setToastMessage('');
       setShowToast(false);
+      setToastType(type);
     }, 3000)
   }
 
@@ -82,7 +85,13 @@ const App = () => {
   const updateFrequency = async () => {
     await axios.post('http://localhost:3001/random/frequency', {
       frequency,
-    });
+    }).then(() => {
+      handleShowToast('Successfully updated number generation amount');
+    }).catch(
+    () => {
+      handleShowToast('Successfully updated number generation amount', 'error');
+      }
+    );
   };
 
   const chartOptions = {
@@ -143,7 +152,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      {showToast ? <Toast message={toastMessage} type={'error'} /> : null}
+      {showToast ? <Toast message={toastMessage} type={toastType} /> : null}
     </>
   );
 };
