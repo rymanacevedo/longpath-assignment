@@ -75,7 +75,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <>
       <h1>Random Number Generator</h1>
       <button onClick={startNumberGeneration}>Start</button>
       <button onClick={stopNumberGeneration}>Stop</button>
@@ -98,7 +98,7 @@ const App = () => {
 
       <ReactECharts option={chartOptions} />
       <HistoryTable data={filteredData} />
-    </div>
+    </>
   );
 };
 

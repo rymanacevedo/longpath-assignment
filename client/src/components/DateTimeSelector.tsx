@@ -11,7 +11,7 @@ interface Props {
 
 const DateTimeSelector = ({ startDate, setStartDate, endDate, setEndDate }: Props) => {
   return (
-    <div style={{ display: 'flex', gap: '10px', margin: '20px 0' }}>
+    <>
       <div>
         <label>Start Date:</label>
         <DatePicker
@@ -30,7 +30,7 @@ const DateTimeSelector = ({ startDate, setStartDate, endDate, setEndDate }: Prop
           dateFormat="Pp"
         />
       </div>
-    </div>
+    </>
   );
 };
 

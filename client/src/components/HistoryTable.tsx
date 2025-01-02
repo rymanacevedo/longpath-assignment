@@ -25,7 +25,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
   });
 
   return (
-    <div>
+    <>
       <h2>History (Last 20 Numbers)</h2>
 
       {/* Filters */}
@@ -79,7 +79,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
             ))}
           </tbody>
         </table>
-      </div>
+    </>
   );
 };
 
