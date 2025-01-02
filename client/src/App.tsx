@@ -3,6 +3,7 @@ import axios from 'axios';
 import { io, Socket } from 'socket.io-client';
 import ReactECharts from 'echarts-for-react';
 import DateTimeSelector from './components/DateTimeSelector';
+import HistoryTable from './components/HistoryTable';
 
 const App = () => {
   const [data, setData] = useState<{ timestamp: string; value: number }[]>([]);
@@ -96,6 +97,7 @@ const App = () => {
       />
 
       <ReactECharts option={chartOptions} />
+      <HistoryTable data={filteredData} />
     </div>
   );
 };
