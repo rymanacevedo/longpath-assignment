@@ -53,34 +53,40 @@ const App = () => {
     setFilteredData(filtered);
   }, [startDate, endDate, data]);
 
+  function isSocketDefined(socket: Socket | null): socket is Socket {
+    return socket !== null;
+  }
+
   const startNumberGeneration = async () => {
-    if (!socket) {
-      return;
+    if (isSocketDefined(socket) && socket.connected) {
+      socket.emit("start");
+      addToast({message: 'Successfully started number generation', type: 'success'})
     }
-    socket.emit("start");
-    // handleShowToast("Successfully started number generation");
-    addToast({message: 'Successfully started number generation', type: 'success'})
+    else {
+      addToast({message: 'Failed to start number generation', type: 'error'});
+    }
   };
   const stopNumberGeneration = async () => {
 
-    if (!socket) {
-      return;
+    if (isSocketDefined(socket) && socket.connected) {
+      socket.emit("stop");
+      addToast({message: 'Stopped number generation', type: 'success'})
     }
-    socket.emit("stop");
-    // handleShowToast("Stopped number generation");
-    addToast({message: 'Stopped number generation', type: 'success'})
+    else {
+      addToast({message: 'Failed to stop number generation', type: 'error'});
+    }
   };
-  const updateFrequency = async () => {
+  const updateFrequency = () => {
 
-    await axios
+    axios
       .post("http://localhost:3001/random/frequency", {
         frequency,
       })
       .then(() => {
-        // handleShowToast("Successfully updated number generation amount");
         addToast({message: 'Successfully updated number generation amount', type: 'success'})
       })
-      .catch(() => {
+      .catch((e: Error) => {
+        console.error(e);
         addToast({message: 'Unknown error updating frequency', type: 'error'})
       });
   };
