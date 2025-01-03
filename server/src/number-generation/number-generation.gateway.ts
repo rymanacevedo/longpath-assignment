@@ -3,7 +3,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket} from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
@@ -20,9 +20,11 @@ export class NumberGenerationGateway {
   private _frequency = 1000; // Default frequency in ms
 
   startGeneration(client: Socket) {
-
     if (this._isGenerating) {
-      client.emit('status', { isGenerating: true, message: 'Already generating numbers' });
+      client.emit('status', {
+        isGenerating: true,
+        message: 'Already generating numbers',
+      });
       return;
     }
     this._isGenerating = true;
@@ -34,12 +36,18 @@ export class NumberGenerationGateway {
       this.io.emit('random-number', data);
     }, this._frequency);
 
-    this.io.emit('status', { isGenerating: true, message: 'Number generation started' });
+    this.io.emit('status', {
+      isGenerating: true,
+      message: 'Number generation started',
+    });
   }
 
   stopGeneration(client: Socket) {
     if (!this._isGenerating) {
-      client.emit('status', { isGenerating: false, message: 'Not generating numbers' });
+      client.emit('status', {
+        isGenerating: false,
+        message: 'Not generating numbers',
+      });
       return;
     }
 
@@ -50,7 +58,10 @@ export class NumberGenerationGateway {
 
     this._isGenerating = false;
 
-    this.io.emit('status', { isGenerating: false, message: 'Number generation stopped' });
+    this.io.emit('status', {
+      isGenerating: false,
+      message: 'Number generation stopped',
+    });
   }
 
   updateFrequency(newFrequency: number) {

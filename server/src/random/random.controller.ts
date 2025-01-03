@@ -7,12 +7,11 @@ export class RandomController {
 
   @Post('frequency')
   setFrequency(@Body('frequency') frequency: number) {
-    if(frequency <= 0) {
-      return {message: 'Frequency must be greater than 0'}
+    if (frequency <= 0) {
+      return { message: 'Frequency must be greater than 0' };
     }
 
     this.gateway.updateFrequency(frequency);
-    return {message: `Frequency set to ${frequency}ms`}
+    return { message: `Frequency set to ${frequency}ms` };
   }
-
 }

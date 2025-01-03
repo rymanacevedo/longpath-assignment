@@ -8,7 +8,7 @@ describe('RandomController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RandomController],
-      providers: [RandomService]
+      providers: [RandomService],
     }).compile();
 
     controller = module.get<RandomController>(RandomController);
@@ -20,6 +20,6 @@ describe('RandomController', () => {
 
   it('should set the frequency', () => {
     const result = controller.setFrequency(5);
-    expect(result.message).toBe('Frequency set to 5ms')
+    expect(result.message).toBe('Frequency set to 5ms');
   });
 });

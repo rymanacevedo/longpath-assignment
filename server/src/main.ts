@@ -8,7 +8,7 @@ async function bootstrap() {
     methods: 'GET,POST',
     allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
-  })
+  });
 
   await app.listen(3001);
 }
