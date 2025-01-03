@@ -29,7 +29,7 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
 
   return (
     <>
-      <h2>History (Last 20 Numbers)</h2>
+      <h2 className={'text-2xl font-bold mb-4 mt-4'}>History (Last 20 Numbers)</h2>
 
       {/* Filters */}
       <div>
@@ -40,7 +40,6 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           onChange={(e) =>
             setMinValue(e.target.value ? parseFloat(e.target.value) : null)
           }
-          style={{ marginLeft: "5px", marginRight: "10px" }}
         />
         Max Value:
         <input
@@ -49,11 +48,10 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
           onChange={(e) =>
             setMaxValue(e.target.value ? parseFloat(e.target.value) : null)
           }
-          style={{ marginLeft: "5px" }}
         />
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-y-auto max-h-96">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>

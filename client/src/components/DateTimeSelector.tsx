@@ -22,7 +22,7 @@ const DateTimeSelector = ({
           Start Date:
         </label>
         <DatePicker
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-1 block w-full border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           selected={startDate}
           onChange={(date) => setStartDate(date)}
           showTimeSelect
@@ -34,7 +34,7 @@ const DateTimeSelector = ({
           End Date:
         </label>
         <DatePicker
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-1 block w-full border rounded shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
           selected={endDate}
           onChange={(date) => setEndDate(date)}
           showTimeSelect

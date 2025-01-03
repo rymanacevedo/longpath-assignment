@@ -102,14 +102,12 @@ const App = () => {
   return (
     <>
       <div className="container mx-auto p-4">
-        <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
-          {/* Left Panel */}
-          <div className="flex-1">
-            {/* Chart and Controls */}
-            <h1 className="text-2xl font-bold text-center mb-4">
+      <h1 className="text-2xl font-bold text-center mb-4">
               Random Number Generator
             </h1>
-            <div className="flex flex-col md:flex-row md:space-x-4">
+            <div className="flex flex-col space-y-4">
+              <h2 className="text-xl font-bold">Controls:</h2>
+              <div className="flex space-x-4">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
                 onClick={startNumberGeneration}
@@ -135,12 +133,18 @@ const App = () => {
               >
                 Update
               </button>
+              </div>
+      
             </div>
+        <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
+      
+          {/* Left Panel */}
+          <div className="flex-1 flex items-center justify-center">
+            <ReactECharts option={chartOptions} className="w-full h-80" />
           </div>
 
           {/* Right Panel */}
           <div className="flex-1">
-            <ReactECharts option={chartOptions} className="w-full h-80" />
             <DateTimeSelector
               startDate={startDate}
               setStartDate={setStartDate}
