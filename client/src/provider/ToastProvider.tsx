@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import Toasty from '../components/Toasty';
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import Toasty from "../components/Toasty";
 
-type ToastType = 'success' | 'error';
+type ToastType = "success" | "error";
 
 interface Toast {
   message: string;
@@ -26,20 +26,20 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ToastContext.Provider value={{ addToast }}>
-  {children}
-  <div className="fixed bottom-5 right-5 space-y-2">
-    {toasts.map((toast, index) => (
-        <Toasty key={index} message={toast.message} type={toast.type} />
-))}
-  </div>
-  </ToastContext.Provider>
-);
+      {children}
+      <div className="fixed bottom-5 right-5 space-y-2">
+        {toasts.map((toast, index) => (
+          <Toasty key={index} message={toast.message} type={toast.type} />
+        ))}
+      </div>
+    </ToastContext.Provider>
+  );
 };
 
 export const useToast = () => {
   const context = useContext(ToastContext);
   if (!context) {
-    throw new Error('useToast must be used within a ToastProvider');
+    throw new Error("useToast must be used within a ToastProvider");
   }
   return context;
 };

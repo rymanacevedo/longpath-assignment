@@ -4,7 +4,7 @@ import { io, Socket } from "socket.io-client";
 import ReactECharts from "echarts-for-react";
 import DateTimeSelector from "./components/DateTimeSelector";
 import HistoryTable from "./components/HistoryTable";
-import { useToast } from './provider/ToastProvider';
+import { useToast } from "./provider/ToastProvider";
 
 const App = () => {
   const [data, setData] = useState<{ timestamp: string; value: number }[]>([]);
@@ -60,34 +60,39 @@ const App = () => {
   const startNumberGeneration = async () => {
     if (isSocketDefined(socket) && socket.connected) {
       socket.emit("start");
-      addToast({message: 'Successfully started number generation', type: 'success'})
-    }
-    else {
-      addToast({message: 'Failed to start number generation', type: 'error'});
+      addToast({
+        message: "Successfully started number generation",
+        type: "success",
+      });
+    } else {
+      addToast({ message: "Failed to start number generation", type: "error" });
     }
   };
   const stopNumberGeneration = async () => {
-
     if (isSocketDefined(socket) && socket.connected) {
       socket.emit("stop");
-      addToast({message: 'Stopped number generation', type: 'success'})
-    }
-    else {
-      addToast({message: 'Failed to stop number generation', type: 'error'});
+      addToast({ message: "Stopped number generation", type: "success" });
+    } else {
+      addToast({ message: "Failed to stop number generation", type: "error" });
     }
   };
   const updateFrequency = () => {
-
     axios
       .post("http://localhost:3001/random/frequency", {
         frequency,
       })
       .then(() => {
-        addToast({message: 'Successfully updated number generation amount', type: 'success'})
+        addToast({
+          message: "Successfully updated number generation amount",
+          type: "success",
+        });
       })
       .catch((e: Error) => {
         console.error(e);
-        addToast({message: 'Unknown error updating frequency', type: 'error'})
+        addToast({
+          message: "Unknown error updating frequency",
+          type: "error",
+        });
       });
   };
   const chartOptions = {
@@ -95,7 +100,6 @@ const App = () => {
     yAxis: { type: "value" },
     series: [{ data: filteredData.map((d) => d.value), type: "line" }],
   };
-
 
   // for echart bug on initial load
   const echartRef = useRef<any>(null);
@@ -106,9 +110,9 @@ const App = () => {
       }
     };
 
-    window.addEventListener('load', handleResize);
+    window.addEventListener("load", handleResize);
     return () => {
-      window.removeEventListener('load', handleResize);
+      window.removeEventListener("load", handleResize);
     };
   }, []);
 
@@ -151,7 +155,11 @@ const App = () => {
         <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
           {/* Left Panel */}
           <div className="flex-1 flex items-center justify-center">
-            <ReactECharts ref={echartRef} option={chartOptions} className="w-full h-80" />
+            <ReactECharts
+              ref={echartRef}
+              option={chartOptions}
+              className="w-full h-80"
+            />
           </div>
 
           {/* Right Panel */}
