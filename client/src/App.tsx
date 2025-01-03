@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import ReactECharts from "echarts-for-react";
@@ -108,6 +108,22 @@ const App = () => {
     series: [{ data: filteredData.map((d) => d.value), type: "line" }],
   };
 
+
+  // for echart bug on initial load
+  const echartRef = useRef<any>(null);
+  useEffect(() => {
+    const handleResize = () => {
+      if (echartRef.current) {
+        echartRef.current.getEchartsInstance().resize();
+      }
+    };
+
+    window.addEventListener('load', handleResize);
+    return () => {
+      window.removeEventListener('load', handleResize);
+    };
+  }, []);
+
   return (
     <>
       <div className="container mx-auto p-4">
@@ -147,7 +163,7 @@ const App = () => {
         <div className="flex flex-col space-y-4 lg:space-y-0 lg:flex-row lg:space-x-4">
           {/* Left Panel */}
           <div className="flex-1 flex items-center justify-center">
-            <ReactECharts option={chartOptions} className="w-full h-80" />
+            <ReactECharts ref={echartRef} option={chartOptions} className="w-full h-80" />
           </div>
 
           {/* Right Panel */}
