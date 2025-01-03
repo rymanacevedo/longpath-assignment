@@ -1,13 +1,13 @@
 type Toasty = {
   message: string;
-  type: 'success' | 'error' | 'info';
+  type: "success" | "error" | "info";
 };
 
 const Toast = ({ message, type }: Toasty) => {
   const typeClasses = {
-    success: 'bg-green-500',
-    error: 'bg-red-500',
-    info: 'bg-blue-500',
+    success: "bg-green-500",
+    error: "bg-red-500",
+    info: "bg-blue-500",
   };
 
   return (

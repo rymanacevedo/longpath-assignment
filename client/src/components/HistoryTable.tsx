@@ -29,26 +29,44 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
 
   return (
     <>
-      <h2 className={'text-2xl font-bold mb-4 mt-4'}>History (Last 20 Numbers)</h2>
+      <h2 className={"text-2xl font-bold mb-4 mt-4"}>
+        History (Last 20 Numbers)
+      </h2>
 
       {/* Filters */}
-      <div>
-        Min Value:
-        <input
-          type="number"
-          value={minValue ?? ""}
-          onChange={(e) =>
-            setMinValue(e.target.value ? parseFloat(e.target.value) : null)
-          }
-        />
-        Max Value:
-        <input
-          type="number"
-          value={maxValue ?? ""}
-          onChange={(e) =>
-            setMaxValue(e.target.value ? parseFloat(e.target.value) : null)
-          }
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Min Value:
+          </label>
+          <input
+            type="number"
+            className="border rounded"
+            id="minValue"
+            value={minValue ?? ""}
+            onChange={(e) =>
+              setMinValue(e.target.value ? parseFloat(e.target.value) : null)
+            }
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Max Value:
+          </label>
+          <input
+            id="maxValue"
+            className="border rounded"
+            type="number"
+            value={maxValue ?? ""}
+            onChange={(e) =>
+              setMaxValue(
+                e.currentTarget.value
+                  ? parseFloat(e.currentTarget.value)
+                  : null,
+              )
+            }
+          />
+        </div>
       </div>
 
       <div className="overflow-y-auto max-h-96">
@@ -59,25 +77,24 @@ const HistoryTable = ({ data }: HistoryTableProps) => {
                 #
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                 onClick={() => {
                   setSortBy("timestamp");
                   setSortDirection(sortDirection === "asc" ? "desc" : "asc");
                 }}
               >
-                Timestamp{" "}
+                Timestamp
                 {sortBy === "timestamp" &&
                   (sortDirection === "asc" ? "↑" : "↓")}
               </th>
               <th
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                 onClick={() => {
                   setSortBy("value");
                   setSortDirection(sortDirection === "asc" ? "desc" : "asc");
                 }}
               >
-                {" "}
-                Value{" "}
+                Value
                 {sortBy === "value" && (sortDirection === "asc" ? "↑" : "↓")}
               </th>
             </tr>
