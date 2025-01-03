@@ -4,7 +4,6 @@ import { io, Socket } from 'socket.io-client';
 import ReactECharts from 'echarts-for-react';
 import DateTimeSelector from './components/DateTimeSelector';
 import HistoryTable from './components/HistoryTable';
-import './output.css';
 import Toast from './components/Toasty';
 
 const App = () => {
