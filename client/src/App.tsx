@@ -4,7 +4,7 @@ import { io, Socket } from "socket.io-client";
 import ReactECharts from "echarts-for-react";
 import DateTimeSelector from "./components/DateTimeSelector";
 import HistoryTable from "./components/HistoryTable";
-import Toast from "./components/Toasty";
+import { useToast } from './provider/ToastProvider';
 
 const App = () => {
   const [data, setData] = useState<{ timestamp: string; value: number }[]>([]);
@@ -15,11 +15,8 @@ const App = () => {
   const [frequency, setFrequency] = useState(1000);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<"success" | "error" | "info">(
-    "success",
-  );
+
+  const { addToast } = useToast();
 
   useEffect(() => {
     const newSocket = io("http://localhost:3001", {
@@ -56,52 +53,37 @@ const App = () => {
     setFilteredData(filtered);
   }, [startDate, endDate, data]);
 
-  const handleShowToast = (
-    message: string,
-    type: "success" | "error" | "info" = "success",
-  ) => {
-    setToastMessage(message);
-    setShowToast(true);
-    setToastType(type);
-    setTimeout(() => {
-      setToastMessage("");
-      setShowToast(false);
-      setToastType(type);
-    }, 3000);
-  };
-
   const startNumberGeneration = async () => {
     if (!socket) {
       return;
     }
     socket.emit("start");
-    handleShowToast("Successfully started number generation");
+    // handleShowToast("Successfully started number generation");
+    addToast({message: 'Successfully started number generation', type: 'success'})
   };
-
   const stopNumberGeneration = async () => {
+
     if (!socket) {
       return;
     }
     socket.emit("stop");
-    handleShowToast("Stopped number generation");
+    // handleShowToast("Stopped number generation");
+    addToast({message: 'Stopped number generation', type: 'success'})
   };
-
   const updateFrequency = async () => {
+
     await axios
       .post("http://localhost:3001/random/frequency", {
         frequency,
       })
       .then(() => {
-        handleShowToast("Successfully updated number generation amount");
+        // handleShowToast("Successfully updated number generation amount");
+        addToast({message: 'Successfully updated number generation amount', type: 'success'})
       })
       .catch(() => {
-        handleShowToast(
-          "Successfully updated number generation amount",
-          "error",
-        );
+        addToast({message: 'Unknown error updating frequency', type: 'error'})
       });
   };
-
   const chartOptions = {
     xAxis: { type: "category", data: filteredData.map((d) => d.timestamp) },
     yAxis: { type: "value" },
@@ -178,7 +160,6 @@ const App = () => {
           </div>
         </div>
       </div>
-      {showToast ? <Toast message={toastMessage} type={toastType} /> : null}
     </>
   );
 };
