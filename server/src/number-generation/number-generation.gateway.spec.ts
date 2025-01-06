@@ -10,7 +10,7 @@ async function createNestApp(...gateways: any): Promise<INestApplication> {
   return testingModule.createNestApplication();
 }
 
-describe('ChatGateway', () => {
+describe('NumberGenerationGateway', () => {
   let gateway: NumberGenerationGateway;
   let app: INestApplication;
   let ioClient: Socket;
@@ -48,4 +48,38 @@ describe('ChatGateway', () => {
     });
     ioClient.disconnect();
   });
+
+  it('should emit "status" on "start"', async () => {
+    ioClient.connect();
+    ioClient.emit('start');
+    await new Promise<void>((resolve) => {
+      ioClient.on('status', (data) => {
+        expect(data).toBe('Number generation started');
+        resolve();
+      });
+    });
+  });
+
+  it('should emit "random-number" on "start"', async () => {
+    ioClient.connect();
+    ioClient.emit('start');
+    await new Promise<void>((resolve) => {
+      ioClient.on('random-number', (data) => {
+        expect(data).toBe('Number generation started');
+        resolve();
+      });
+    });
+  });
+
+  it('should emit "status" on "stop"', async () => {
+    ioClient.connect();
+    ioClient.emit('stop');
+    await new Promise<void>((resolve) => {
+      ioClient.on('status', (data) => {
+        expect(data).toBe('Number generation stopped');
+        resolve();
+      });
+    });
+  });
+  
 });

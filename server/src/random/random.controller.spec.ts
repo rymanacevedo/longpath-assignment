@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RandomController } from './random.controller';
-import { RandomService } from './random.service';
 
 describe('RandomController', () => {
   let controller: RandomController;
@@ -8,7 +7,6 @@ describe('RandomController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RandomController],
-      providers: [RandomService],
     }).compile();
 
     controller = module.get<RandomController>(RandomController);
